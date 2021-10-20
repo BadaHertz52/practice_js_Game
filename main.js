@@ -21,8 +21,8 @@ const rabbit = {
   height:50,
   // 공룡 등장시킬 때 쓸 함수
   draw(){
-    //ctx.fillStyle = 'green';
-    //ctx.fillRect(this.x , this.y ,this.width, this.height);
+    ctx.fillStyle = 'green';
+    ctx.fillRect(this.x , this.y ,this.width, this.height);
     ctx.drawImage(img1, this.x ,this.y);
   }
 }
@@ -36,8 +36,8 @@ class Plant {
     this.height =50;
   }
   draw(){
-    //ctx.fillStyle ='grey';
-    //ctx.fillRect(this.x, this.y ,this.width ,this.height);
+    ctx.fillStyle ='grey';
+    ctx.fillRect(this.x, this.y ,this.width ,this.height);
     ctx.drawImage(img2,this.x, this.y)
   }
 }
@@ -50,8 +50,8 @@ class Carrot {
     this.height=50;
   }
   draw(){
-    //ctx.fillStyle ='orange';
-   // ctx.fillRect(this.x, this.y ,this.width ,this.height);
+    ctx.fillStyle ='orange';
+    ctx.fillRect(this.x, this.y ,this.width ,this.height);
     ctx.drawImage(img3 , this.x ,this.y)
   }
 }
@@ -62,7 +62,12 @@ let plantArray = [];
 let carrotArray = [];
 let jump = false;
 let jumpTimer =0 ;
-let points =0 ;
+let getPoints =0 ;
+let losePoints=0;
+let point=0 ;
+const htmlPoint = document.getElementById('points');
+
+
 document.addEventListener('keydown', function(e){
   if(e.code ==='Space'){
     jump = true ; 
@@ -71,45 +76,52 @@ document.addEventListener('keydown', function(e){
 
 
 
+
 //충돌 감지
-function CheckConflict( rabbit, plant){
-  let x= plant.x - (rabbit.x+rabbit.width);
-  let x1 = plant.x -rabbit.x;
-  let y = plant.y - (rabbit.y+rabbit.height);
+let xIsTrue = false;
+let yIsTrue = false ;
 
-  if( x <0 && x1 > 0 && y<0){
-    cancelAnimationFrame(AniObject);
-    alert("GAME OVER... Do you want to play the game again?");
-    plantArray =[];
-
-  } 
-}
-// 충돌 감지2 
-function GetPoint (r, c){
-  let x = r.x < c.x ;
-  let x1 = c.x < (r.x+r.width) ;
-  let x2 = r.x<(c.x+c.width);
-  let x3 = (c.x + c.width) < (r.x +r.width);
-  let y = r.y < c.y ; 
-  let y1 = c.y <(r.y+r.height);
-  let y2 = r.y < (c.y+ c.height) ;
-  let y3 = (c.y+ c.height) < (r.y + r.height) ; 
-
-  let xIsTrue = false;
-  let yIsTrue = false ;
+function DetectConflict (r, o){
+  let x = r.x <= o.x ;
+  let x1 = o.x <= (r.x+r.width) ;
+  let x2 = r.x<=(o.x+o.width);
+  let x3 = (o.x + o.width) <= (r.x +r.width);
+  let y = r.y <= o.y ; 
+  let y1 = o.y <=(r.y+r.height);
+  let y2 = r.y <= (o.y+ o.height) ;
+  let y3 = (o.y+ o.height) <= (r.y + r.height) ; 
 
   (x && x1)||(x2 && x3) ? xIsTrue =true : xIsTrue=false ;
   (y && y1)||(y2 && y3) ? yIsTrue =true : yIsTrue=false ;
-  if(  xIsTrue&& yIsTrue ){
-    points++;
-    let point = Math.round(points/30)
-    console.log ("get point" , point );
-    document.getElementById('points').innerHTML = `<p> 점수 : ${point} </p>`;
-  } 
+  
+}
+
+function LosePoint(){
+  if(xIsTrue && yIsTrue){losePoints++;};
+  htmlPoint.innerHTML=`점수: ${point}`;
+}
+function GetPoint(){
+  if(  xIsTrue&& yIsTrue ){ getPoints++;} ;
+  htmlPoint.innerHTML=`점수: ${point}`;
+  
+}
+
+function GameOver(){
+  if (point < 0 ){
+    cancelAnimationFrame(AniObject);
+    alert("GAME OVER... Do you want to play the game again?");
+    plantArray =[];
+    getPoints=0;
+    losePoints=0;
+    point=0;
+  }
 }
 function AniObject(){
   requestAnimationFrame(AniObject);
+  console.log(Math.round(losePoints/30) ,Math.round(getPoints/30) , point);
   timer++ ;
+  point= Math.round(getPoints/30)-Math.round(losePoints/30);
+
   ctx.clearRect(0,0, canvas.width ,canvas.height); // 잔상 지우기 
   //장애물 생산 
   if(timer % 180 == 0){
@@ -122,7 +134,8 @@ function AniObject(){
     }; // x좌표 마이너스된 장애물 지우기 
     a.x-- ;
     a.draw();
-    CheckConflict(rabbit, a);
+    DetectConflict(rabbit,a);
+    LosePoint();
   })
 
   if(timer % 400 == 0){
@@ -135,7 +148,8 @@ function AniObject(){
     };
     c.x--;
     c.draw();
-    GetPoint(rabbit,c)
+    DetectConflict(rabbit,c);
+    GetPoint();
   })
   if(rabbit.y<10){
     jump =false;
@@ -153,6 +167,9 @@ function AniObject(){
     jump =  false ; 
     jumpTimer =0;  }
   rabbit.draw() ; //1초 마다 60번실행 
+  GameOver();
   };
 
 AniObject();
+
+
