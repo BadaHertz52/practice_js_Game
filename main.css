@@ -1,0 +1,53 @@
+body{
+  position: relative;
+  width: 60%;
+  height: 60%;
+  margin-left:20%;
+  margin-top:6%;
+  border: 2px solid rgb(53, 53, 53);
+}
+section:first-child {
+  margin-left:8%;
+  margin-top:5%;
+  font-size: 1.1rem;
+}
+.canvas_section{
+  height: 60vh;
+  margin-bottom:2rem ;
+}
+canvas{
+  display: none;
+}
+
+section div:first-child div{
+  margin-top: 10px;
+}
+.popup {
+  display: none;
+}
+.popup.on {
+  display: block;
+  position: absolute;
+  top:40% ;
+  left:15%;
+  text-align: center;
+  line-height:1.6rem;
+  width: 60%;
+  padding:1.2rem;
+  border: 2px solid rgb(53, 53, 53);
+
+}
+.popup.on div{
+  margin-bottom: 20px;
+}
+.popup.on #state{
+  font-size: 1.8rem;
+}
+.popup.on button{
+  font-size: 1.3rem;
+  background-color: rgb(250, 250, 250);
+}
+
+.popup.on button:hover{
+  background-color: rgb(255, 205, 98);
+}
