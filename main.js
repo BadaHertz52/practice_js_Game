@@ -20,7 +20,7 @@ let point ;
 
 
 function CheckWindowSize(){
-  canvas.width =window.innerWidth * 0.6;
+  canvas.width =window.innerWidth * 0.59;
   canvas.height = window.innerHeight * 0.62  ;
 
   if(window.innerWidth <768){
@@ -28,13 +28,11 @@ function CheckWindowSize(){
     gameExplain.style.fontSize =10;
     gameState.style.display='none';
     startBtn.style.display='none';
-  }else{
-    
   }
 }
 CheckWindowSize();
 
-window.onresize = CheckWindowSize;
+window.onresize = CheckWindowSize;  
 
 
 // 창크기에 따른 canvas 크기 조절 

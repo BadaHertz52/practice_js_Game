@@ -21,7 +21,6 @@ section:first-child {
 }
 canvas{
   display: none;
-  border: 2px solid rgb(15, 231, 130);
 }
 
 section div:first-child div{
