@@ -31,7 +31,7 @@ section div:first-child div{
 .popup{
   display: none;
 }
-.alret.on ,.popup.on { 
+.popup.on { 
   display: block;
   position: absolute;
   top:35% ;

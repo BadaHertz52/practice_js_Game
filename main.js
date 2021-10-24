@@ -28,6 +28,8 @@ function CheckWindowSize(){
     gameExplain.style.fontSize =10;
     gameState.style.display='none';
     startBtn.style.display='none';
+  }else{
+    
   }
 }
 CheckWindowSize();
