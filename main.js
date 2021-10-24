@@ -1,76 +1,12 @@
 const canvas= document.getElementById("canvas");
 const ctx = canvas.getContext('2d');
-canvas.width =window.innerWidth * 0.6;
-canvas.height = window.innerHeight * 0.62  ;
-const img1 =new Image();
-const img2 = new Image();
-const img3 =new Image(); 
-const img4 = new Image();
 
-img1.src='rabitt.png';
-img2.src = 'plant.png';
-img3.src='carrot.png';
-img4.src ='tiger.png';
-
-
-const rabbit = {
-  x:150,
-  y:300,
-  width:50,
-  height:60,
-  draw(){
-    ctx.drawImage(img1, this.x ,this.y );
-  }
-}
-
-class Plant {
-  constructor(){
-    this.x =700;
-    this.y=400;
-    this.width =50;
-    this.height =50;
-    this.value="obstacle1"
-  }
-  draw(){
-    ctx.drawImage(img2,this.x, this.y )
-  }
-}
-
-class Tiger {
-  constructor(){
-    this.x= 700;
-    this.y=280;
-    this.width=50;
-    this.height=50;
-    this.value="obstacle2"
-  }
-  draw(){
-    ctx.drawImage(img4 , this.x ,this.y );
-  }
-}
-
-class Carrot1 {
-  constructor(){
-    this.x =700;
-    this.y=130;
-    this.width=50;
-    this.height=50;
-  }
-  draw(){
-    ctx.drawImage(img3 , this.x ,this.y  )
-  }
-}
-class Carrot2 {
-  constructor(){
-    this.x= 500;
-    this.y= 350;
-    this.width=50;
-    this.height=50;
-  }
-  draw(){
-    ctx.drawImage(img3 , this.x ,this.y  )
-  }
-}
+const htmlPoint = document.getElementById('points');
+const htmlLevel = document.getElementById('level');
+const gameState =document.getElementById('state');
+const popup =document.querySelector('.popup');
+const gameExplain =document.getElementById('explain');
+const startBtn = document.querySelector('.start');
 
 let level=1 ; 
 let timer = 0 ;
@@ -83,12 +19,95 @@ let losePoints=0;
 let point ;
 
 
-const htmlPoint = document.getElementById('points');
-const htmlLevel = document.getElementById('level');
-const gameState =document.getElementById('state');
-const popup =document.querySelector('.popup');
-const gameExplain =document.getElementById('explain');
-const startBtn = document.querySelector('.start');
+function CheckWindowSize(){
+  canvas.width =window.innerWidth * 0.6;
+  canvas.height = window.innerHeight * 0.62  ;
+
+  if(window.innerWidth <768){
+    gameExplain.textContent = "게임을 진행하기에 창 크기가 작습니다.창의 크기가 768px 이상으로 변경 후 새로고침해주세요.";
+    gameExplain.style.fontSize =10;
+    gameState.style.display='none';
+    startBtn.style.display='none';
+  }
+}
+CheckWindowSize();
+
+window.onresize = CheckWindowSize;
+
+
+// 창크기에 따른 canvas 크기 조절 
+
+const img1 =new Image();
+const img2 = new Image();
+const img3 =new Image(); 
+const img4 = new Image();
+
+img1.src='rabitt.png';
+img2.src = 'plant.png';
+img3.src='carrot.png';
+img4.src ='tiger.png';
+
+
+const rabbit = {
+  x: window.innerWidth>900? 150 : 50,
+  y:300,
+  width:50,
+  height:60,
+  draw(){
+    ctx.drawImage(img1, this.x ,this.y );
+  }
+}
+
+class Plant {
+  constructor(){
+    
+    this.x = window.innerWidth>900? 700 : 500;
+    this.y=400;
+    this.width =50;
+    this.height =50;
+    this.value="obstacle1"
+  }
+  draw(){
+    ctx.drawImage(img2,this.x, this.y )
+  }
+}
+
+class Tiger {
+  constructor(){
+    this.x=  window.innerWidth>900? 700 : 500;
+    this.y=280;
+    this.width=50;
+    this.height=50;
+    this.value="obstacle2"
+  }
+  draw(){
+    ctx.drawImage(img4 , this.x ,this.y );
+  }
+}
+
+class Carrot1 {
+  constructor(){
+    this.x =  window.innerWidth>900? 700 : 500;
+    this.y=130;
+    this.width=50;
+    this.height=50;
+  }
+  draw(){
+    ctx.drawImage(img3 , this.x ,this.y  )
+  }
+}
+class Carrot2 {
+  constructor(){
+    this.x=  window.innerWidth>900? 700 : 500;
+    this.y= 350;
+    this.width=50;
+    this.height=50;
+  }
+  draw(){
+    ctx.drawImage(img3 , this.x ,this.y  )
+  }
+}
+
 
 function StartGame (){
   popup.classList.remove('on');
@@ -101,6 +120,8 @@ function ClearGame (){
   cancelAnimationFrame(AniObject);
   obstacleArray =[];
   pointArray =[] ;
+  jumpTimer =0 
+  timer = 0; 
   popup.classList.add('on');
   gameExplain.textContent="게임을 다시 하시겠습니까?"
   
@@ -109,8 +130,7 @@ function ClearGame (){
     getPoints = 0;
     point = 0; 
     level= 1 ; 
-    jumpTimer =0 
-    timer = 0; 
+
     StartGame();
   }
   startBtn.addEventListener('click',restartGame ); 
@@ -178,7 +198,6 @@ function AniObject(){
   ctx.clearRect(0,0, canvas.width ,canvas.height);
   
   popup.classList.contains('on') ? timer =0 : timer++ ;
-
   point= Math.round(getPoints/30)-Math.round(losePoints/30); 
   //객체 생산 
   rabbit.draw() ;
@@ -255,6 +274,6 @@ function AniObject(){
     jumpTimer =0;  }
 
   };
-AniObject();
+  AniObject()
 
 

@@ -8,25 +8,27 @@
   <script defer src="main.js"></script>
 </head>
 <body>
-  <section>
-    <div>
-      <div id="level">Level 1 🥕</div>
-      <div id="points">점수 : 0</div>
-    </div>
-    <div class="popup on "> 
-      <div id="state">게임설명</div>
-      <div id="explain">
-        스페이스바를 눌러 토끼를 점프시키세요.
-        </br>
-        당근은 +1점 , 풀과 호랑이는 -1 점입니다.
-      </br>
-        게임을 시작할까요?
+  <div id='inner'>
+    <section>
+      <div>
+        <div id="level">Level 1 🥕</div>
+        <div id="points">점수 : 0</div>
       </div>
-      <button class="start">start</button>
-    </div>
-  </section>
-  <section class="canvas_section">
-    <canvas id="canvas"></canvas>
-  </section>
+      <div class="popup"> 
+        <div id="state">게임설명</div>
+        <div id="explain">
+          스페이스바를 눌러 토끼를 점프시키세요.
+          </br>
+          당근은 +1점 , 풀과 호랑이는 -1 점입니다.
+        </br>
+          게임을 시작할까요?
+        </div>
+        <button class="start">start</button>
+      </div>
+    </section>
+    <section class="canvas_section">
+      <canvas id="canvas"></canvas>
+    </section>
+  </div>
 </body>
 </html>
