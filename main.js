@@ -1,7 +1,7 @@
 const canvas= document.getElementById("canvas");
 const ctx = canvas.getContext('2d');
 canvas.width =window.innerWidth * 0.6;
-canvas.height = window.innerHeight * 0.6  ;
+canvas.height = window.innerHeight * 0.62  ;
 const img1 =new Image();
 const img2 = new Image();
 const img3 =new Image(); 
@@ -12,18 +12,17 @@ img2.src = 'plant.png';
 img3.src='carrot.png';
 img4.src ='tiger.png';
 
-// 등장 캐릭터의 속성부터 object 자료 정리
+
 const rabbit = {
   x:150,
   y:300,
   width:50,
-  height:50,
+  height:60,
   draw(){
     ctx.drawImage(img1, this.x ,this.y );
   }
 }
 
-//장애물 -여러 장애물을 사용할 것이기 때문에 class로 정의
 class Plant {
   constructor(){
     this.x =700;
@@ -49,7 +48,7 @@ class Tiger {
     ctx.drawImage(img4 , this.x ,this.y );
   }
 }
-// 점수
+
 class Carrot1 {
   constructor(){
     this.x =700;
@@ -72,7 +71,7 @@ class Carrot2 {
     ctx.drawImage(img3 , this.x ,this.y  )
   }
 }
-// 애니메이션
+
 let level=1 ; 
 let timer = 0 ;
 let pointArray = [];
@@ -81,9 +80,8 @@ let jump = false;
 let jumpTimer =0 ;
 let getPoints =0 ;
 let losePoints=0;
-let point=15 ;
+let point ;
 
-// 상황에 따른 텍스트 변화
 
 const htmlPoint = document.getElementById('points');
 const htmlLevel = document.getElementById('level');
@@ -92,11 +90,13 @@ const popup =document.querySelector('.popup');
 const gameExplain =document.getElementById('explain');
 const startBtn = document.querySelector('.start');
 
-function StartGmae (){
+function StartGame (){
   popup.classList.remove('on');
   canvas.style.display='block';
+  
 }
-startBtn.addEventListener('click', StartGmae) ; 
+startBtn.addEventListener('click', StartGame); 
+
 function ClearGame (){
   cancelAnimationFrame(AniObject);
   obstacleArray =[];
@@ -111,7 +111,7 @@ function ClearGame (){
     level= 1 ; 
     jumpTimer =0 
     timer = 0; 
-    StartGmae();
+    StartGame();
   }
   startBtn.addEventListener('click',restartGame ); 
 }
@@ -176,8 +176,9 @@ function GetPoint(n){
 function AniObject(){
   requestAnimationFrame(AniObject);
   ctx.clearRect(0,0, canvas.width ,canvas.height);
+  
+  popup.classList.contains('on') ? timer =0 : timer++ ;
 
-  timer++ ;
   point= Math.round(getPoints/30)-Math.round(losePoints/30); 
   //객체 생산 
   rabbit.draw() ;
@@ -186,7 +187,12 @@ function AniObject(){
   const carrot1 = new Carrot1();
   const carrot2 = new Carrot2();
 
-  if(  level > 2  && timer % 80 == 0){
+  if(timer >0){
+    MakeObject()
+  }
+  function MakeObject(){
+
+  if(  level > 2  &&  timer % 80 == 0){
     obstacleArray.push(plant);
   }
   if (level <= 2 && timer % 175 === 0){ 
@@ -218,6 +224,7 @@ function AniObject(){
     DetectConflict(rabbit,pointObject);
     GetPoint(1);
   })
+}
 
   //점프 기능 설정 
   if(rabbit.y<10){
@@ -247,7 +254,7 @@ function AniObject(){
     jump =  false ; 
     jumpTimer =0;  }
 
-  
   };
-  AniObject();
+AniObject();
+
 
