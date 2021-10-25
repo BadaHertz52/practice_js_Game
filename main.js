@@ -9,7 +9,7 @@ const gameExplain =document.getElementById('explain');
 const startBtn = document.querySelector('.start');
 
 let level=1 ; 
-let timer = 0 ;
+let timer  ;
 let pointArray = [];
 let obstacleArray = [];
 let jump = false;
@@ -18,12 +18,11 @@ let getPoints =0 ;
 let losePoints=0;
 let point ;
 
-// 창크기에 따른 canvas 크기 조절 
+// 창크기에 따른 canvas 크기 조절  
 function CheckWindowSize(){
   canvas.width =window.innerWidth * 0.59;
-  canvas.height = window.innerHeight * 0.62  ;
-
-  if(window.innerWidth <768){
+  canvas.height = window.innerHeight * 0.6 ;
+  if(window.innerWidth < 768){
     gameExplain.textContent = "게임을 진행하기에 창 크기가 작습니다.창의 크기가 768px 이상으로 변경 후 새로고침해주세요.";
     gameExplain.style.fontSize =10;
     gameState.style.display='none';
@@ -45,22 +44,19 @@ img2.src = 'plant.png';
 img3.src='carrot.png';
 img4.src ='tiger.png';
 
-
 const rabbit = {
   x: window.innerWidth>900? 150 : 50,
-  y:250,
-  width:50,
+  y:300,
+  width:40,
   height:60,
   draw(){
     ctx.drawImage(img1, this.x ,this.y , this.width ,this.height);
   }
 }
-
 class Plant {
   constructor(){
-    
     this.x = window.innerWidth>900? 700 : 500;
-    this.y=400;
+    this.y=300;
     this.width =50;
     this.height =50;
     this.value="obstacle1"
@@ -73,7 +69,7 @@ class Plant {
 class Tiger {
   constructor(){
     this.x=  window.innerWidth>900? 700 : 500;
-    this.y=280;
+    this.y=180;
     this.width=50;
     this.height=50;
     this.value="obstacle2"
@@ -86,7 +82,7 @@ class Tiger {
 class Carrot1 {
   constructor(){
     this.x =  window.innerWidth>900? 700 : 500;
-    this.y=130;
+    this.y=30;
     this.width=50;
     this.height=50;
   }
@@ -97,7 +93,7 @@ class Carrot1 {
 class Carrot2 {
   constructor(){
     this.x=  window.innerWidth>900? 700 : 500;
-    this.y= 350;
+    this.y= 220;
     this.width=50;
     this.height=50;
   }
@@ -110,7 +106,6 @@ class Carrot2 {
 function StartGame (){
   popup.classList.remove('on');
   canvas.style.display='block';
-  
 }
 startBtn.addEventListener('click', StartGame); 
 
@@ -128,31 +123,36 @@ function ClearGame (){
     getPoints = 0;
     point = 0; 
     level= 1 ; 
-
+    ChangeLevel();
     StartGame();
   }
   startBtn.addEventListener('click',restartGame ); 
 }
+
 function ChangeLevel (){
+
   if (point < 0 ){
     gameState.textContent = "Game over...";
     ClearGame();
-    htmlPoint.textContent = '점수:0';
+    htmlPoint.textContent = 'POINT: 0';
   }else {
-    htmlPoint.textContent=`점수: ${point}`;
+    htmlPoint.textContent=`POINT : ${point}`;
   }
+  
   if(level==1 && point >  4 ){
     level =2 ;
-    htmlLevel.textContent ='LEVEL 2🥕🥕';
   }
   if (level == 2 && point> 8 ){
     level =3 ;
-    htmlLevel.textContent ='LEVEL 3🥕🥕🥕' ;
   }
   if (level ===3 && point > 12){
     ClearGame();
     gameState.textContent = "Mission Clear🐰💛" ;
   }
+  let levels =[
+    '🥕' , '🥕🥕' ,'🥕🥕🥕'
+  ];
+  htmlLevel.textContent =`LEVEL : ${level} ${levels[level-1]}`;
 }
 
 // 점프 
@@ -194,8 +194,8 @@ function GetPoint(n){
 function AniObject(){
   requestAnimationFrame(AniObject);
   ctx.clearRect(0,0, canvas.width ,canvas.height);
-  
-  popup.classList.contains('on') ? timer =0 : timer++ ;
+
+  popup.classList.contains('on') ? timer =100 : timer++ ;
   point= Math.round(getPoints/30)-Math.round(losePoints/30); 
   //객체 생산 
   rabbit.draw() ;
@@ -244,7 +244,7 @@ function AniObject(){
 }
 
   //점프 기능 설정 
-  if(rabbit.y<10){
+  if(rabbit.y<5){
     jump =false;
   }
   if(jump == true){
@@ -263,7 +263,7 @@ function AniObject(){
     
   } 
   if (jump ==false){
-    if(rabbit.y < 400){
+    if(rabbit.y <= 300){
       rabbit.y+=3 ;  
     } 
   }

@@ -9,6 +9,7 @@ body{
   margin-top:6%;
   border: 2px solid rgb(53, 53, 53);
 }
+
 section:first-child {
   margin-left:8%;
   margin-top:5%;
@@ -16,8 +17,7 @@ section:first-child {
 }
 .canvas_section{
   height: 60vh;
-  margin-top: 2rem;;
-  margin-bottom:2rem ;
+  
 }
 canvas{
   display: none;
