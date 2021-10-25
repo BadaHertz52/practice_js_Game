@@ -18,7 +18,7 @@ let getPoints =0 ;
 let losePoints=0;
 let point ;
 
-
+// 창크기에 따른 canvas 크기 조절 
 function CheckWindowSize(){
   canvas.width =window.innerWidth * 0.59;
   canvas.height = window.innerHeight * 0.62  ;
@@ -34,8 +34,6 @@ CheckWindowSize();
 
 window.onresize = CheckWindowSize;  
 
-
-// 창크기에 따른 canvas 크기 조절 
 
 const img1 =new Image();
 const img2 = new Image();
