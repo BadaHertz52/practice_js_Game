@@ -48,11 +48,11 @@ img4.src ='tiger.png';
 
 const rabbit = {
   x: window.innerWidth>900? 150 : 50,
-  y:300,
+  y:250,
   width:50,
   height:60,
   draw(){
-    ctx.drawImage(img1, this.x ,this.y );
+    ctx.drawImage(img1, this.x ,this.y , this.width ,this.height);
   }
 }
 
