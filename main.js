@@ -1,6 +1,8 @@
-const canvas= document.getElementById("canvas");
-const ctx = canvas.getContext('2d');
-
+const canvas1= document.getElementById("canvas1");
+const canvas2= document.getElementById("canvas2");
+const ctx1 = canvas1.getContext('2d');
+const ctx2 =canvas2.getContext(`2d`);
+const canvas =document.getElementById('canvas');
 const htmlPoint = document.getElementById('points');
 const htmlLevel = document.getElementById('level');
 const gameState =document.getElementById('state');
@@ -20,8 +22,10 @@ let point ;
 
 // 창크기에 따른 canvas 크기 조절  
 function CheckWindowSize(){
-  canvas.width =window.innerWidth * 0.59;
-  canvas.height = window.innerHeight * 0.6 ;
+  canvas1.width =window.innerWidth * 0.59;
+  canvas2.width =window.innerWidth * 0.59;
+  canvas1.height = window.innerHeight * 0.6 ;
+  canvas2.height = window.innerHeight * 0.6 ;
   if(window.innerWidth < 768){
     gameExplain.textContent = "게임을 진행하기에 창 크기가 작습니다.창의 크기가 768px 이상으로 변경 후 새로고침해주세요.";
     gameExplain.style.fontSize =10;
@@ -34,79 +38,114 @@ CheckWindowSize();
 window.onresize = CheckWindowSize;  
 
 
-const img1 =new Image();
-const img2 = new Image();
-const img3 =new Image(); 
-const img4 = new Image();
+const rabbit_img =new Image();
+const filed_img = new Image();
+const plant_img = new Image();
+const carrot_img =new Image(); 
+const tiger_img = new Image();
 
-img1.src='rabitt.png';
-img2.src = 'plant.png';
-img3.src='carrot.png';
-img4.src ='tiger.png';
+rabbit_img.src='rabbit.png';
+filed_img.src = 'filed.png';
+plant_img.src = 'plant.png';
+carrot_img.src='carrot.png';
+tiger_img.src ='tiger.png';
 
 const rabbit = {
   x: window.innerWidth>900? 150 : 50,
   y:300,
-  width:40,
-  height:60,
+  width:55,
+  height:55,
   draw(){
-    ctx.drawImage(img1, this.x ,this.y , this.width ,this.height);
-   z-index:3
+    ctx1.drawImage(rabbit_img, this.x ,this.y , this.width ,this.height);
+  }
+}
+class Filed {
+  constructor(){
+    this.x = window.innerWidth*0.6;
+    this.y=360;
+    this.width =50;
+    this.height =50;
+    this.value="deco"
+  } 
+  draw(){
+    ctx2.drawImage(filed_img,this.x, this.y )
   }
 }
 class Plant {
   constructor(){
-    this.x = window.innerWidth>900? 700 : 500;
-    this.y=300;
+    this.x = window.innerWidth*0.6;
+    this.y=320;
     this.width =50;
-    this.height =50;
+    this.height =100;
     this.value="obstacle1"
-  }
+  } 
   draw(){
-    ctx.drawImage(img2,this.x, this.y )
+    ctx2.drawImage(plant_img,this.x, this.y )
   }
 }
-
 class Tiger {
   constructor(){
-    this.x=  window.innerWidth>900? 700 : 500;
-    this.y=180;
+    this.x= window.innerWidth*0.6;
+    this.y=200;
     this.width=50;
     this.height=50;
     this.value="obstacle2"
   }
   draw(){
-    ctx.drawImage(img4 , this.x ,this.y );
+    ctx2.drawImage(tiger_img , this.x ,this.y );
+  }
+}
+class Tiger2 {
+  constructor(){
+    this.x= window.innerWidth*0.6;
+    this.y=120;
+    this.width=50;
+    this.height=50;
+    this.value="obstacle2"
+  }
+  draw(){
+    ctx2.drawImage(tiger_img , this.x ,this.y );
   }
 }
 
 class Carrot1 {
   constructor(){
-    this.x =  window.innerWidth>900? 700 : 500;
+    this.x =  window.innerWidth*0.6;
     this.y=30;
     this.width=50;
     this.height=50;
   }
   draw(){
-    ctx.drawImage(img3 , this.x ,this.y  )
+    ctx2.drawImage(carrot_img , this.x ,this.y  )
   }
 }
 class Carrot2 {
   constructor(){
-    this.x=  window.innerWidth>900? 700 : 500;
+    this.x= window.innerWidth*0.6;
     this.y= 220;
     this.width=50;
     this.height=50;
   }
   draw(){
-    ctx.drawImage(img3 , this.x ,this.y  )
+    ctx2.drawImage(carrot_img , this.x ,this.y  )
+  }
+}
+class Carrot3 {
+  constructor(){
+    this.x=  window.innerWidth*0.6;
+    this.y= 160;
+    this.width=50;
+    this.height=50;
+  }
+  draw(){
+    ctx2.drawImage(carrot_img , this.x ,this.y  )
   }
 }
 
 
 function StartGame (){
   popup.classList.remove('on');
-  canvas.style.display='block';
+  canvas.style.display="block";
 }
 startBtn.addEventListener('click', StartGame); 
 
@@ -140,13 +179,13 @@ function ChangeLevel (){
     htmlPoint.textContent=`POINT : ${point}`;
   }
   
-  if(level==1 && point >  4 ){
+  if(level==1 && point >  8 ){
     level =2 ;
   }
-  if (level == 2 && point> 8 ){
+  if (level == 2 && point> 16 ){
     level =3 ;
   }
-  if (level ===3 && point > 12){
+  if (level ===3 && point > 20){
     ClearGame();
     gameState.textContent = "Mission Clear🐰💛" ;
   }
@@ -194,33 +233,51 @@ function GetPoint(n){
 
 function AniObject(){
   requestAnimationFrame(AniObject);
-  ctx.clearRect(0,0, canvas.width ,canvas.height);
+  ctx1.clearRect(0,0, canvas1.width ,canvas1.height);
+  ctx2.clearRect(0,0, canvas2.width ,canvas2.height);
 
   popup.classList.contains('on') ? timer =100 : timer++ ;
   point= Math.round(getPoints/30)-Math.round(losePoints/30); 
   //객체 생산 
   rabbit.draw() ;
+  const filed = new Filed();
   const plant = new Plant();
   const tiger =new Tiger();
+  const tiger2 =new Tiger2();
   const carrot1 = new Carrot1();
   const carrot2 = new Carrot2();
+  const carrot3 = new Carrot3();
 
   if(timer >0){
     MakeObject()
   }
   function MakeObject(){
-
-  if(  level > 2  &&  timer % 80 == 0){
-    obstacleArray.push(plant);
+  timer % 55 == 0 && obstacleArray.push(filed);
+  timer % 170==0 && obstacleArray.push(plant);
+  timer == 180 && pointArray.push(carrot1);
+  timer == 300 && pointArray.push(carrot2);
+  timer == 450 && obstacleArray.push(tiger);
+  
+  if(level ==1 ){
+    timer % 497==0 && pointArray.push(carrot1);
+    timer % 650 ==0 && pointArray.push(carrot3);
+    timer % 903 == 0 && pointArray.push(carrot2);
   }
-  if (level <= 2 && timer % 175 === 0){ 
-    obstacleArray.push(plant);
+  if( level ==2  ){
+    timer % 500 == 0 && pointArray.push(carrot1);
+    timer % 918 == 0 && pointArray.push(carrot2);
   }
-  if( level >1 && timer % 350 == 0 ){
-    obstacleArray.push(tiger);
+  if(level >1){
+    timer % 800 == 0 && obstacleArray.push(tiger);
+    timer % 1015 ==0 && obstacleArray.push(tiger2);
+  }
+  if(level ==3){
+    timer % 900 == 0 && pointArray.push(carrot1);
+    timer % 415 == 0 && pointArray.push(carrot2);
+    timer % 610 == 0 && pointArray.push(carrot3)
   }
   obstacleArray.forEach( (obstacle ,i ,o)=>{
-    if(obstacle.x<0){
+    if(obstacle.x<-100){
       o.splice(i,1)
     };
     obstacle.x-- ;
@@ -230,11 +287,8 @@ function AniObject(){
     
   })
   
-  if(timer % 400 == 0){pointArray.push(carrot1);}
-  if (timer % 450 == 0){pointArray.push(carrot2);}
-  
   pointArray.forEach( (pointObject,i,o)=>{
-    if(pointObject.x<0){
+    if(pointObject.x<-50){
       o.splice(i,1)
     };
     pointObject.x--;
