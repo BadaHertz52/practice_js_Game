@@ -1,4 +1,5 @@
 # 토끼 게임 
+
 [🐰페이지 바로 가기](https://badahertz52.github.io/practice_js_Game_rabbit/)
 
 ## 게임 진행을 위한 조건
@@ -75,11 +76,13 @@
 페이지의 하단에는  페이지 작성자는 본인의 깃헙의 프로필 링크, 해당 프로젝트에 대한 깃헙 페이지로 연결되는 링크와 프로젝트에 사용된 이모티콘에 대한 출처를 확인할 수 있는 버튼이 있습니다. 
 
 ## 프로젝트에 사용된 기술
-HTML
-CSS (canvas 사용)
-Java Script (class 를 통해 반복적인 요소를 생성함)
++ HTML
++ CSS (canvas 사용)
++ Java Script (class 를 통해 반복적인 요소를 생성함)
 
-+ java script에서 사용한 객체
+### java script
+
++java script에서 사용한 객체
 </br>
 
 |객체|설명|
@@ -90,6 +93,7 @@ Java Script (class 를 통해 반복적인 요소를 생성함)
 |jumpTimer| 토끼가 점프하는 시간에 대한 객체|        
 
 + 동일한 객체를 만들어 주는 class 
+
  ```java script
  let obstacleArray = []; //점수를 차감하는 장애물 객체들이 담긴 배열 
  
@@ -120,7 +124,7 @@ Java Script (class 를 통해 반복적인 요소를 생성함)
   </br>
   점수를 차감하는 객체와 점수를 얻을 수 있는 객체는 반복적으로 사용하기 때문에 이를 class를 이용해 정의하고 사용하고자 하는 조건하에서 사용하고자 하는 객체를 적합한 배열(점수를 얻는 객체는 pointArray , 점수를 차감하는 객체는 obstacleArray)에 넣었습니다. 
   
-+ java script에서 사용한  함수
+  + java script에서 사용한  함수
 
 |객체|설명|
 |----|-------|
