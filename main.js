@@ -51,6 +51,7 @@ const rabbit = {
   height:60,
   draw(){
     ctx.drawImage(img1, this.x ,this.y , this.width ,this.height);
+   z-index:3
   }
 }
 class Plant {
