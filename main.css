@@ -1,13 +1,25 @@
 body{
   min-width: 768px;
 }
-#inner{
+#main{
   position: relative;
   width: 60%;
-  height: 60%;
+  height: 50%;
   margin-left:20%;
-  margin-top:6%;
+  margin-top:4rem;
   border: 2px solid rgb(53, 53, 53);
+}
+#footer {
+  width: 60%;
+  margin:2rem 20%;
+  font-size: 1rem;
+}
+a:active ,
+a:link,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: black;
 }
 
 section:first-child {
@@ -69,4 +81,65 @@ section div:first-child div{
 
 .popup.on button:hover{
   background-color: rgb(255, 205, 98);
+}
+
+/*footer*/
+.iconsUl.on {
+  display: block;
+}
+.iconsUl {
+  display: none;
+}
+#footer {
+  display: flex;
+}
+#footer>div:first-child a{
+  margin-right: 2rem;
+}
+.iconsBtn {
+  background-color: #ffff;
+  border: none;
+}
+#footer ,
+.iconsBtn ,
+#footer a {
+  font-size: 1rem;
+}
+.iconsBtn , 
+#footer a {
+  padding: 5px 10px;
+}
+#footer #iconsUl a {
+  padding: 0.5rem
+}
+.iconsBtn:hover ,
+#footer a:hover{
+  border-radius: 15px;
+  background-color: rgb(189, 237, 252);
+  box-shadow: rgba(63, 63, 63, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+#footer #iconsUl a:hover{
+  background-color: rgb(248, 248, 248);
+  border-radius: 50%;
+}
+#icons {
+  position: relative;
+}
+.iconsBtn.on, .iconsUl.on{
+  background-color: rgb(214, 217, 218);
+  
+}
+#iconsUl {
+  position: absolute;
+  top:-2rem;
+  left:4rem;
+  list-style: none;
+  padding: 1rem 0;
+  width: 18rem;
+  border-radius: 10px;
+}
+
+li{
+  float: left;
+  padding: 0 0.5rem ;
 }

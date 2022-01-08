@@ -1,3 +1,13 @@
+// iconsBtn
+const iconsBtn =document.getElementById('iconsBtn');
+const iconsUl =document.getElementById('iconsUl');
+function iconsPopup (){
+  iconsUl.classList.toggle('on');
+  iconsBtn.classList.toggle('on')
+};
+iconsBtn.addEventListener('click', iconsPopup);
+
+// canvas
 const canvas1= document.getElementById("canvas1");
 const canvas2= document.getElementById("canvas2");
 const ctx1 = canvas1.getContext('2d');
@@ -28,7 +38,7 @@ function CheckWindowSize(){
   canvas2.height = window.innerHeight * 0.6 ;
   if(window.innerWidth < 768){
     gameExplain.textContent = "게임을 진행하기에 창 크기가 작습니다.창의 크기가 768px 이상으로 변경 후 새로고침해주세요.";
-    gameExplain.style.fontSize =10;
+    gameExplain.style.fontSize =10; 
     gameState.style.display='none';
     startBtn.style.display='none';
   }
@@ -52,7 +62,7 @@ tiger_img.src ='tiger.png';
 
 const rabbit = {
   x: window.innerWidth>900? 150 : 50,
-  y:300,
+  y: window.innerHeight * 0.5,
   width:55,
   height:55,
   draw(){
@@ -62,8 +72,8 @@ const rabbit = {
 class Filed {
   constructor(){
     this.x = window.innerWidth*0.6;
-    this.y=360;
-    this.width =50;
+    this.y= window.innerHeight * 0.56 ;
+    this.width =100;
     this.height =50;
     this.value="deco"
   } 
@@ -74,7 +84,7 @@ class Filed {
 class Plant {
   constructor(){
     this.x = window.innerWidth*0.6;
-    this.y=320;
+    this.y= window.innerHeight * 0.5;
     this.width =50;
     this.height =100;
     this.value="obstacle1"
@@ -98,7 +108,7 @@ class Tiger {
 class Tiger2 {
   constructor(){
     this.x= window.innerWidth*0.6;
-    this.y=120;
+    this.y=100;
     this.width=50;
     this.height=50;
     this.value="obstacle2"
@@ -122,7 +132,7 @@ class Carrot1 {
 class Carrot2 {
   constructor(){
     this.x= window.innerWidth*0.6;
-    this.y= 220;
+    this.y= window.innerHeight * 0.45;
     this.width=50;
     this.height=50;
   }
@@ -318,7 +328,7 @@ function AniObject(){
     
   } 
   if (jump ==false){
-    if(rabbit.y <= 300){
+    if(rabbit.y <= window.innerHeight * 0.5){
       rabbit.y+=3 ;  
     } 
   }
